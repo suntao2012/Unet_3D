@@ -13,7 +13,7 @@ AUGMENT = False
 NORMALIZE = True
 
 data_path = '../data'
-target_path = '../h5_data_SN'
+target_path = '../h5_data_SA'
 '''    
 h5_data_[S][A][M][N]
     S: mean substraction
@@ -141,19 +141,24 @@ def build_h5_dataset(data_path, target_path):
     for i in range(10):
         subject_name = 'subject-%d-' % (i+1)
         f_T1 = os.path.join(data_path, subject_name+'T1.hdr')
-        img_T1 = nib.load(f_T1)
+        #img_T1 = nib.load(f_T1)
         f_T2 = os.path.join(data_path, subject_name+'T2.hdr')
-        img_T2 = nib.load(f_T2)
+        #img_T2 = nib.load(f_T2)
         f_l = os.path.join(data_path, subject_name+'label.hdr')
-        img_l = nib.load(f_l)
+        #img_l = nib.load(f_l)
 
         # combine T1 and T2 as 2 channels
-        inputs_tmp_T1 = img_T1.get_data()
-        inputs_tmp_T2 = img_T2.get_data()
-        inputs = np.concatenate((inputs_tmp_T1,inputs_tmp_T2), axis=3)
+        #inputs_tmp_T1 = img_T1.get_data()
+        #inputs_tmp_T2 = img_T2.get_data()
+        #inputs = np.concatenate((inputs_tmp_T1,inputs_tmp_T2), axis=3)
 
-        labels = img_l.get_data()
-        convert_labels(labels)
+        inputs = np.random.randint(1000, size=(224,224,224,2)) 
+
+        #labels = img_l.get_data()
+        #convert_labels(labels)
+
+        labels = np.random.randint(4, size=(224,224,224,1))
+        print(([SIZE[0],SIZE[1]+1,SIZE[2],SIZE[3]+1,SIZE[4],SIZE[5]+1]))
 
         inputs = inputs[SIZE[0]:SIZE[1]+1,SIZE[2]:SIZE[3]+1,SIZE[4]:SIZE[5]+1,:].astype('float32')
         labels = labels[SIZE[0]:SIZE[1]+1,SIZE[2]:SIZE[3]+1,SIZE[4]:SIZE[5]+1,:].reshape(new_shape)

@@ -56,7 +56,7 @@ def configure():
 	# Dense Transformer Networks
     flags.DEFINE_boolean('add_dtn', False, 'add Dense Transformer Networks or not')
     flags.DEFINE_integer('dtn_location', 2, 'The Dense Transformer Networks location')
-    flags.DEFINE_string('control_points_ratio', 2,
+    flags.DEFINE_string('control_points_ratio', '2',
         'Setup the ratio of control_points comparing with the Dense transformer networks input size')    
     # fix bug of flags
     flags.FLAGS.__dict__['__parsed'] = False
@@ -78,5 +78,5 @@ def main(_):
 
 if __name__ == '__main__':
     # configure which gpu or cpu to use
-    os.environ['CUDA_VISIBLE_DEVICES'] = '6'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '0'
     tf.app.run()

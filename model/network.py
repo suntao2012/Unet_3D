@@ -1,4 +1,5 @@
 import os
+import time
 import numpy as np
 import tensorflow as tf
 from utils.data_reader import H53DDataLoader
@@ -196,6 +197,12 @@ class Unet_3D(object):
                 loss, _ = self.sess.run(
                     [self.loss_op, self.train_op], feed_dict=feed_dict)
                 print('----training loss', loss)
+            for ii in range(100):
+              start_t = time.time()
+              for jj in range(10):
+                _ = self.sess.run([self.predictions], feed_dict=feed_dict)
+              duration = time.time() - start_t
+              print('Inference time: {:.4f}'.format(duration / 10))
             if train_step % self.conf.save_interval == 0:
                 self.save(train_step+self.conf.reload_step)
 
